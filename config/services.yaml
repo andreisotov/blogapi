@@ -25,3 +25,4 @@ services:
 
     BlogAPI\Domain\Articles\ArticleRepositoryInterface: '@BlogAPI\Infrastructure\Doctrine\ArticleRepository'
     BlogAPI\Domain\Categories\CategoryRepositoryInterface: '@BlogAPI\Infrastructure\Doctrine\CategoryRepository'
+    BlogAPI\Domain\Tags\TagRepositoryInterface: '@BlogAPI\Infrastructure\Doctrine\TagRepository'

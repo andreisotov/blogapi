@@ -45,6 +45,11 @@ security:
             stateless: true
             anonymous: true
 
+        tags:
+            pattern: ^/api/tags
+            stateless: true
+            anonymous: true
+
         api:
             pattern: ^/api
             stateless: true
@@ -68,4 +73,5 @@ security:
         - { path: ^/api/article, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/categories, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/category, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/tags, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 

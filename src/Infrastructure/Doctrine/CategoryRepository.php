@@ -8,9 +8,6 @@ use BlogAPI\Domain\Categories\CategoryRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- *
- */
 class CategoryRepository extends ServiceEntityRepository implements CategoryRepositoryInterface
 {
 	public function __construct(ManagerRegistry $registry)

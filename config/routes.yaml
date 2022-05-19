@@ -1,12 +1,2 @@
 api_login_check:
   path: /api/login_check
-
-api_article_list:
-  path: /api/articles
-  methods: GET
-  controller: BlogAPI\Controller\ArticleController::index
-
-api_article_item:
-  path: /api/articles/{id}
-  methods: GET
-  controller: BlogAPI\Controller\ArticleController::index

@@ -7,9 +7,6 @@ use BlogAPI\Domain\Articles\ArticleRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- *
- */
 class ArticleRepository extends ServiceEntityRepository implements ArticleRepositoryInterface
 {
 	public function __construct(ManagerRegistry $registry)
