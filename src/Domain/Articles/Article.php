@@ -12,7 +12,8 @@ class Article
 	private string $title;
 	private string $slug;
 	private ?string $description;
-	private ?string $youtubeCode;
+	private ?string $text;
+	private ?string $youtubeVideoId;
 	private ?string $image;
 	private bool $active;
 	private DateTimeInterface $publishAt;
@@ -88,17 +89,33 @@ class Article
 	/**
 	 * @return string|null
 	 */
-	public function getYoutubeCode(): ?string
+	public function getText(): ?string
 	{
-		return $this->youtubeCode;
+		return $this->text;
 	}
 
 	/**
-	 * @param string|null $youtubeCode
+	 * @param string|null $text
 	 */
-	public function setYoutubeCode(?string $youtubeCode): void
+	public function setText(?string $text): void
 	{
-		$this->youtubeCode = $youtubeCode;
+		$this->text = $text;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getYoutubeVideoId(): ?string
+	{
+		return $this->youtubeVideoId;
+	}
+
+	/**
+	 * @param string|null $youtubeVideoId
+	 */
+	public function setYoutubeVideoId(?string $youtubeVideoId): void
+	{
+		$this->youtubeVideoId = $youtubeVideoId;
 	}
 
 	/**
@@ -174,9 +191,9 @@ class Article
 	}
 
 	/**
-	 * @param \DateTimeInterface $updatedAt
+	 * @param \DateTimeInterface|null $updatedAt
 	 */
-	public function setUpdatedAt(DateTimeInterface $updatedAt): void
+	public function setUpdatedAt(?DateTimeInterface $updatedAt): void
 	{
 		$this->updatedAt = $updatedAt;
 	}
@@ -212,5 +229,4 @@ class Article
 	{
 		$this->categories = $categories;
 	}
-
 }

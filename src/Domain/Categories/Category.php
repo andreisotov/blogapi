@@ -11,6 +11,7 @@ class Category
 	private string $title;
 	private string $slug;
 	private ?string $description;
+	private ?string $youtubePlaylistId;
 	private bool $active;
 	private ?DateTimeInterface $createdAt;
 	private ?DateTimeInterface $updatedAt;
@@ -65,7 +66,7 @@ class Category
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
 	public function getDescription(): ?string
 	{
@@ -73,11 +74,27 @@ class Category
 	}
 
 	/**
-	 * @param string $description
+	 * @param string|null $description
 	 */
-	public function setDescription(string $description): void
+	public function setDescription(?string $description): void
 	{
 		$this->description = $description;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getYoutubePlaylistId(): ?string
+	{
+		return $this->youtubePlaylistId;
+	}
+
+	/**
+	 * @param string|null $youtubePlaylistId
+	 */
+	public function setYoutubePlaylistId(?string $youtubePlaylistId): void
+	{
+		$this->youtubePlaylistId = $youtubePlaylistId;
 	}
 
 	/**
