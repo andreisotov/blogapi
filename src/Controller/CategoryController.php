@@ -5,7 +5,6 @@ namespace BlogAPI\Controller;
 use BlogAPI\Application\Handler\Category\ItemCategoryHandler;
 use BlogAPI\Application\Handler\Category\ListCategoryHandler;
 use BlogAPI\Domain\Articles\Article;
-use BlogAPI\Infrastructure\Doctrine\ArticleRepository;
 use BlogAPI\Infrastructure\Doctrine\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -45,11 +44,11 @@ class CategoryController extends AbstractController
 		return new JsonResponse($allCategories);
 	}
 
-	#[Route('/api/article/{id}', methods: ['GET'])]
+	#[Route('/api/category/{id}', methods: ['GET'])]
 	public function article(int $id): JsonResponse
 	{
 		/** @var Article $article */
-		$article = $this->itemArticleHandler->handle($id);
+		$article = $this->itemCategoryHandler->handle($id);
 
 		if (is_null($article)) {
 			return new JsonResponse(null, 404);
