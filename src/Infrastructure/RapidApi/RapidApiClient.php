@@ -2,16 +2,17 @@
 namespace BlogAPI\Infrastructure\RapidApi;
 
 use BlogAPI\Infrastructure\Services\ProviderInterface;
-use DateTimeImmutable;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Utils;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
 class RapidApiClient implements ProviderInterface
 {
-	const API_YOUTUBE_URL_SEARCH = 'https://youtube-v31.p.rapidapi.com/search';
+	private const API_YOUTUBE_URL_SEARCH = 'https://youtube-v31.p.rapidapi.com/search';
+
+	private const RAPID_API_TOKEN = 'db8b735689msh8df7802437a4f1ep1a2c95jsn8664ae1a39b7';
 
 	private Client $client;
 
@@ -20,7 +21,7 @@ class RapidApiClient implements ProviderInterface
 		$this->client = new Client(
 			[
 				'headers' =>
-					['X-RapidAPI-Key' => env('RAPID_API_TOKEN')]
+					['X-RapidAPI-Key' => self::RAPID_API_TOKEN]
 			]
 		);
 	}

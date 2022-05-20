@@ -2,7 +2,9 @@
 
 namespace BlogAPI\Infrastructure\Command;
 
+use BlogAPI\Application\Handler\Article\CreateArticleHandler;
 use BlogAPI\Infrastructure\Services\FetchYoutubeVideosInterface;
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,20 +12,28 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FetchYoutubeVideosCommand extends Command
 {
+	/**
+	 * @var string
+	 */
 	protected static $defaultName = 'app:fetch-youtube-videos';
+
 	const MAX_RESULTS = 50;
 
+	/**
+	 * @param \BlogAPI\Infrastructure\Services\FetchYoutubeVideosInterface $fetchYoutubeVideos
+	 * @param \BlogAPI\Application\Handler\Article\CreateArticleHandler    $createArticleHandler
+	 */
 	public function __construct(
 		private FetchYoutubeVideosInterface $fetchYoutubeVideos,
-		//private CreateArticleHandler $createArticleHandler
-	)
-	{
+		private CreateArticleHandler $createArticleHandler
+	) {
 		parent::__construct();
 	}
 
 	/**
-	 * @param InputInterface $input
+	 * @param InputInterface  $input
 	 * @param OutputInterface $output
+	 *
 	 * @return int
 	 */
 	public function execute(InputInterface $input, OutputInterface $output): int
@@ -31,29 +41,31 @@ class FetchYoutubeVideosCommand extends Command
 		$videos = $this->fetchYoutubeVideos->fetch(
 			[
 				'params' => [
-					'channelId' => $input->getArgument('channelId'),
-					'part' => 'snippet,id',
+					'channelId'  => $input->getArgument('channelId'),
+					'part'       => 'snippet,id',
 					'maxResults' => $input->getArgument('maxResults') ?? self::MAX_RESULTS
 				]
 			]
 		);
 
-		dd($videos);
 		foreach ($videos as $video) {
-			/*try {
-				$this->createGameHandler->handle($game);
-				$output->writeln($game['homeTeam'].'-'.$game['awayTeam']." games are saved.");
+			try {
+				$this->createArticleHandler->handle($video);
+				$output->writeln($video['title'] . " video are saved.");
 			} catch (Exception $e) {
 				$output->writeln($e->getMessage());
-			}*/
+			}
 		}
 
-		$output->writeln('Games are created');
+		$output->writeln('Videos are created');
 
 		return Command::SUCCESS;
 	}
 
-	protected function configure()
+	/**
+	 * @return void
+	 */
+	protected function configure(): void
 	{
 		parent::configure();
 

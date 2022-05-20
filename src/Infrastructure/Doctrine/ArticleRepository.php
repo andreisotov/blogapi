@@ -7,13 +7,25 @@ use BlogAPI\Domain\Articles\ArticleRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ *
+ */
 class ArticleRepository extends ServiceEntityRepository implements ArticleRepositoryInterface
 {
+	/**
+	 * @param \Doctrine\Persistence\ManagerRegistry $registry
+	 */
 	public function __construct(ManagerRegistry $registry)
 	{
 		parent::__construct($registry, Article::class);
 	}
 
+	/**
+	 * @param int $id
+	 *
+	 * @return \BlogAPI\Domain\Articles\Article|null
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 */
 	public function article(int $id): ?Article
 	{
 		$qb = $this->createQueryBuilder("a");
@@ -23,6 +35,9 @@ class ArticleRepository extends ServiceEntityRepository implements ArticleReposi
 		return $qb->getQuery()->getOneOrNullResult();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function articles(): array
 	{
 		$qb = $this->createQueryBuilder("a");
@@ -31,6 +46,11 @@ class ArticleRepository extends ServiceEntityRepository implements ArticleReposi
 		return $qb->getQuery()->getResult();
 	}
 
+	/**
+	 * @param \BlogAPI\Domain\Articles\Article $article
+	 *
+	 * @return array
+	 */
 	public function getTags(Article $article): array
 	{
 		$tags = [];
@@ -44,6 +64,11 @@ class ArticleRepository extends ServiceEntityRepository implements ArticleReposi
 		return $tags;
 	}
 
+	/**
+	 * @param \BlogAPI\Domain\Articles\Article $article
+	 *
+	 * @return array
+	 */
 	public function getCategories(Article $article): array
 	{
 		$categories = [];
@@ -61,5 +86,16 @@ class ArticleRepository extends ServiceEntityRepository implements ArticleReposi
 		}
 
 		return $categories;
+	}
+
+	/**
+	 * @param \BlogAPI\Domain\Articles\Article $article
+	 *
+	 * @return void
+	 */
+	public function save(Article $article): void
+	{
+		$this->_em->persist($article);
+		$this->_em->flush();
 	}
 }

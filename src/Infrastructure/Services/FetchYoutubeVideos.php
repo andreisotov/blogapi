@@ -8,13 +8,24 @@ class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 {
 	private const DEFAULT_ACTIVE = 1;
 
+	/**
+	 * @var \BlogAPI\Infrastructure\Services\ProviderInterface
+	 */
 	private ProviderInterface $provider;
 
+	/**
+	 * @param \BlogAPI\Infrastructure\Services\ProviderInterface $provider
+	 */
 	public function __construct(ProviderInterface $provider)
 	{
 		$this->provider = $provider;
 	}
 
+	/**
+	 * @param array $input
+	 *
+	 * @return array
+	 */
 	public function fetch(array $input = []): array
 	{
 		$videos = $this->provider->getContent($input);
@@ -23,11 +34,7 @@ class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 
 		foreach ($videos['items'] as $video) {
 			if ($video['id']['kind'] === 'youtube#video') {
-				$videoArray['videos'][] = $this->video($video);
-			}
-
-			if ($video['id']['kind'] === 'youtube#playlist') {
-				$videoArray['playlists'][] = $this->category($video);
+				$videoArray[] = $this->video($video);
 			}
 		}
 
@@ -35,6 +42,11 @@ class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 	}
 
 
+	/**
+	 * @param array $video
+	 *
+	 * @return array
+	 */
 	private function video(array $video): array
 	{
 		return [
@@ -44,18 +56,7 @@ class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 			'youtube_video_id' => $video['id']['videoId'],
 			'image'            => $video['snippet']['thumbnails']['high']['url'],
 			'active'           => self::DEFAULT_ACTIVE,
-		];
-	}
-
-	private function category(array $video): array
-	{
-		return [
-			'title'               => $video['snippet']['title'],
-			'slug'                => strtolower((new AsciiSlugger())->slug($video['snippet']['title'])->toString()),
-			'description'         => $video['snippet']['description'],
-			'youtube_playlist_id' => $video['id']['playlistId'],
-			'image'               => $video['snippet']['thumbnails']['high']['url'],
-			'active'              => self::DEFAULT_ACTIVE,
+			'publish_at'       => $video['snippet']['publishedAt'],
 		];
 	}
 }
