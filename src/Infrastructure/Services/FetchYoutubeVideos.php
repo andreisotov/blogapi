@@ -2,23 +2,15 @@
 
 namespace BlogAPI\Infrastructure\Services;
 
-use Symfony\Component\String\Slugger\AsciiSlugger;
+use BlogAPI\Infrastructure\Formatters\FormatterInterface;
+use BlogAPI\Infrastructure\Formatters\YoutubeVideoFormatter;
 
 class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 {
-	private const DEFAULT_ACTIVE = 1;
-
-	/**
-	 * @var \BlogAPI\Infrastructure\Services\ProviderInterface
-	 */
-	private ProviderInterface $provider;
-
-	/**
-	 * @param \BlogAPI\Infrastructure\Services\ProviderInterface $provider
-	 */
-	public function __construct(ProviderInterface $provider)
-	{
-		$this->provider = $provider;
+	public function __construct(
+		private ProviderInterface $provider,
+		private YoutubeVideoFormatter $youtubeVideoFormatter
+	) {
 	}
 
 	/**
@@ -34,29 +26,11 @@ class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 
 		foreach ($videos['items'] as $video) {
 			if ($video['id']['kind'] === 'youtube#video') {
-				$videoArray[] = $this->video($video);
+				$videoArray[] = $this->youtubeVideoFormatter->formatted($video);
 			}
 		}
 
+		dd($videoArray);
 		return $videoArray;
-	}
-
-
-	/**
-	 * @param array $video
-	 *
-	 * @return array
-	 */
-	private function video(array $video): array
-	{
-		return [
-			'title'            => $video['snippet']['title'],
-			'slug'             => strtolower((new AsciiSlugger())->slug($video['snippet']['title'])->toString()),
-			'description'      => $video['snippet']['description'],
-			'youtube_video_id' => $video['id']['videoId'],
-			'image'            => $video['snippet']['thumbnails']['high']['url'],
-			'active'           => self::DEFAULT_ACTIVE,
-			'publish_at'       => $video['snippet']['publishedAt'],
-		];
 	}
 }

@@ -32,14 +32,15 @@ class ArticleController extends AbstractController
 		foreach ($articles as $article) {
 
 			$allArticles[] = [
-				'id'          => $article->getId(),
-				'title'       => $article->getTitle(),
-				'description' => $article->getDescription() ?? '',
-				'youtubeCode' => $article->getYoutubeCode() ?? '',
-				'image'       => $article->getImage() ?? '',
-				'categories'  => $this->articleRepository->getCategories($article),
-				'tags'        => $this->articleRepository->getTags($article),
-				'created_at'  => $article->getCreatedAt(),
+				'id'             => $article->getId(),
+				'title'          => $article->getTitle(),
+				'description'    => $article->getDescription() ?? '',
+				'text'           => $article->getText() ?? '',
+				'youtubeVideoId' => $article->getYoutubeVideoId() ?? '',
+				'image'          => $article->getImage() ?? '',
+				'categories'     => $this->articleRepository->getCategories($article),
+				'tags'           => $this->articleRepository->getTags($article),
+				'created_at'     => $article->getCreatedAt(),
 			];
 		}
 

@@ -2,30 +2,26 @@
 
 namespace BlogAPI\Infrastructure\Command;
 
-use BlogAPI\Application\Handler\Article\CreateArticleHandler;
-use BlogAPI\Infrastructure\Services\FetchYoutubeVideosInterface;
+use BlogAPI\Application\Handler\Category\CreateCategoryHandler;
+use BlogAPI\Infrastructure\Services\FetchYoutubePlaylistsInterface;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class FetchYoutubeVideosCommand extends Command
+class FetchYoutubePlaylistsCommand extends Command
 {
 	/**
 	 * @var string
 	 */
-	protected static $defaultName = 'app:fetch-youtube-videos';
+	protected static $defaultName = 'app:fetch-youtube-playlists';
 
 	public const MAX_RESULTS = 50;
 
-	/**
-	 * @param \BlogAPI\Infrastructure\Services\FetchYoutubeVideosInterface $fetchYoutubeVideos
-	 * @param \BlogAPI\Application\Handler\Article\CreateArticleHandler    $createArticleHandler
-	 */
 	public function __construct(
-		private FetchYoutubeVideosInterface $fetchYoutubeVideos,
-		private CreateArticleHandler $createArticleHandler
+		private FetchYoutubePlaylistsInterface $fetchYoutubePlaylists,
+		private CreateCategoryHandler $createCategoryHandler
 	) {
 		parent::__construct();
 	}
@@ -38,7 +34,7 @@ class FetchYoutubeVideosCommand extends Command
 	 */
 	public function execute(InputInterface $input, OutputInterface $output): int
 	{
-		$videos = $this->fetchYoutubeVideos->fetch(
+		$playlists = $this->fetchYoutubePlaylists->fetch(
 			[
 				'params' => [
 					'channelId'  => $input->getArgument('channelId'),
@@ -48,16 +44,16 @@ class FetchYoutubeVideosCommand extends Command
 			]
 		);
 
-		foreach ($videos as $video) {
+		foreach ($playlists as $playlist) {
 			try {
-				$this->createArticleHandler->handle($video);
-				$output->writeln($video['title'] . " video are saved.");
+				$this->createCategoryHandler->handle($playlist);
+				$output->writeln($playlist['title'] . " playlist are saved.");
 			} catch (Exception $e) {
 				$output->writeln($e->getMessage());
 			}
 		}
 
-		$output->writeln('Videos are created');
+		$output->writeln('Playlists are created');
 
 		return Command::SUCCESS;
 	}

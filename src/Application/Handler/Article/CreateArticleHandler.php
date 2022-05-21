@@ -22,6 +22,10 @@ class CreateArticleHandler
 	 */
 	public function handle(array $article): void
 	{
+		if ($this->articleRepository->findOneBy(['slug' => $article['slug']])) {
+			throw new Exception('Article already saved');
+		}
+
 		$createdAt = new DateTimeImmutable($article['publish_at']);
 
 		$articleObj = new Article();

@@ -2,7 +2,6 @@
 
 namespace BlogAPI\Infrastructure\Doctrine;
 
-use BlogAPI\Domain\Articles\Article;
 use BlogAPI\Domain\Categories\Category;
 use BlogAPI\Domain\Categories\CategoryRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -15,6 +14,11 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
 		parent::__construct($registry, Category::class);
 	}
 
+	/**
+	 * @param \BlogAPI\Domain\Categories\Category $category
+	 *
+	 * @return array
+	 */
 	public function getArticles(Category $category): array
 	{
 		$categories = [];
@@ -36,6 +40,12 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
 		return $categories;
 	}
 
+	/**
+	 * @param int $id
+	 *
+	 * @return \BlogAPI\Domain\Categories\Category|null
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 */
 	public function category(int $id): ?Category
 	{
 		$qb = $this->createQueryBuilder("c");
@@ -45,11 +55,25 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
 		return $qb->getQuery()->getOneOrNullResult();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function categories(): array
 	{
 		$qb = $this->createQueryBuilder("c");
 		$qb->where("c.active = 1");
 
 		return $qb->getQuery()->getResult();
+	}
+
+	/**
+	 * @param \BlogAPI\Domain\Categories\Category $category
+	 *
+	 * @return void
+	 */
+	public function save(Category $category): void
+	{
+		$this->_em->persist($category);
+		$this->_em->flush();
 	}
 }
