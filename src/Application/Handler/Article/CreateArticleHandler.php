@@ -5,7 +5,7 @@ namespace BlogAPI\Application\Handler\Article;
 use BlogAPI\Domain\Articles\Article;
 use BlogAPI\Domain\Articles\ArticleRepositoryInterface;
 use DateTimeImmutable;
-use Exception;
+use RuntimeException;
 
 class CreateArticleHandler
 {
@@ -18,12 +18,12 @@ class CreateArticleHandler
 	 * @param array $article
 	 *
 	 * @return void
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function handle(array $article): void
 	{
 		if ($this->articleRepository->findOneBy(['slug' => $article['slug']])) {
-			throw new Exception('Article already saved');
+			throw new RuntimeException('Article already saved');
 		}
 
 		$createdAt = new DateTimeImmutable($article['publish_at']);
