@@ -30,7 +30,6 @@ class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 			}
 		}
 
-		dd($videoArray);
 		return $videoArray;
 	}
 }

@@ -36,6 +36,7 @@ class CreateArticleHandler
 		$articleObj->setImage($article['image']);
 		$articleObj->setActive($article['active']);
 		$articleObj->setPublishAt($createdAt);
+		$articleObj->setCreatedAt($createdAt);
 
 		$this->articleRepository->save(
 			$articleObj

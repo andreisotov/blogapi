@@ -22,6 +22,7 @@ class YoutubePlaylistFormatter implements FormatterInterface
 			'youtube_playlist_id' => $data['id']['playlistId'],
 			'image'               => $data['snippet']['thumbnails']['high']['url'],
 			'active'              => self::DEFAULT_ACTIVE,
+			'publish_at'          => $data['snippet']['publishedAt'],
 		];
 	}
 }
