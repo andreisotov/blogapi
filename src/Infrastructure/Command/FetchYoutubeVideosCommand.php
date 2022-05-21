@@ -17,12 +17,8 @@ class FetchYoutubeVideosCommand extends Command
 	 */
 	protected static $defaultName = 'app:fetch-youtube-videos';
 
-	public const MAX_RESULTS = 50;
+	private const MAX_RESULTS = 50;
 
-	/**
-	 * @param \BlogAPI\Infrastructure\Services\FetchYoutubeVideosInterface $fetchYoutubeVideos
-	 * @param \BlogAPI\Application\Handler\Article\CreateArticleHandler    $createArticleHandler
-	 */
 	public function __construct(
 		private FetchYoutubeVideosInterface $fetchYoutubeVideos,
 		private CreateArticleHandler $createArticleHandler

@@ -17,7 +17,7 @@ class FetchYoutubePlaylistsCommand extends Command
 	 */
 	protected static $defaultName = 'app:fetch-youtube-playlists';
 
-	public const MAX_RESULTS = 50;
+	private const MAX_RESULTS = 50;
 
 	public function __construct(
 		private FetchYoutubePlaylistsInterface $fetchYoutubePlaylists,
