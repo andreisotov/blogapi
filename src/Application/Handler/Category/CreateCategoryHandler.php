@@ -22,7 +22,7 @@ class CreateCategoryHandler
 	 */
 	public function handle(array $category): void
 	{
-		if ($this->categoryRepository->findOneBy(['slug' => $category['slug']])) {
+		if ($this->categoryRepository->findOneBy(['youtube_playlist_id' => $category['youtube_playlist_id']])) {
 			throw new RuntimeException('Category already saved');
 		}
 

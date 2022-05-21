@@ -22,7 +22,7 @@ class CreateArticleHandler
 	 */
 	public function handle(array $article): void
 	{
-		if ($this->articleRepository->findOneBy(['slug' => $article['slug']])) {
+		if ($this->articleRepository->findOneBy(['youtube_video_id' => $article['youtube_video_id']])) {
 			throw new RuntimeException('Article already saved');
 		}
 
