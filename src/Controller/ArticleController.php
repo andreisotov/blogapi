@@ -61,7 +61,7 @@ class ArticleController extends AbstractController
 			'id'          => $article->getId(),
 			'title'       => $article->getTitle(),
 			'description' => $article->getDescription() ?? '',
-			'youtubeCode' => $article->getYoutubeCode() ?? '',
+			'youtubeCode' => $article->getYoutubeVideoId() ?? '',
 			'image'       => $article->getImage() ?? '',
 			'categories'  => $this->articleRepository->getCategories($article),
 			'tags'        => $this->articleRepository->getTags($article),

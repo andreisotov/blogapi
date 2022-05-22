@@ -18,7 +18,7 @@ class ArticleRepositoryTest extends TestCase
 			$article->setTitle('Article' . $i);
 			$article->setSlug('article' . $i);
 			$article->setDescription('Article description' . $i);
-			$article->setYoutubeCode('asdjkhsdkjhsad' . $i);
+			$article->setYoutubeVideoId('asdjkhsdkjhsad' . $i);
 			$article->setImage('/articles/article' . $i . '.png');
 
 			$articles[] = $article;
@@ -42,7 +42,7 @@ class ArticleRepositoryTest extends TestCase
 		$article->setTitle('Article');
 		$article->setSlug('article');
 		$article->setDescription('Article description');
-		$article->setYoutubeCode('asdjkhsdkjhsad');
+		$article->setYoutubeVideoId('asdjkhsdkjhsad');
 		$article->setImage('/articles/article.png');
 
 		$articleRepository = $this->createMock(ArticleRepository::class);
