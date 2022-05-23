@@ -7,7 +7,7 @@ You can get articles, categories, tags and pivot data (many to many) of these da
 
 # Commands
 Fetch youtube channel playlists:
-**php bin/console app:fetch-youtube-playlists <<your-channel-id>>**
+**php bin/console app:fetch-youtube-playlists your-channel-id**
 
 Fetch youtube channel videos:
-**php bin/console app:fetch-youtube-videos <<your-channel-id>>**
+**php bin/console app:fetch-youtube-videos your-channel-id**
