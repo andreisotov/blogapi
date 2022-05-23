@@ -46,44 +46,4 @@ class CreateArticleHandlerTest extends TestCase
 
 		$this->assertTrue(true);
 	}
-
-	/*public function testMy()
-	{
-		$player = new Player();
-		$player->setUsername('fmo');
-
-		$game = new Game();
-
-		$homeTeam = new Team();
-		$homeTeam->setName('Liverpool');
-
-		$awayTeam = new Team();
-		$awayTeam->setName('Arsenal');
-
-		$game->setId(333);
-		$game->setGameTime(new DateTimeImmutable('tomorrow'));
-		$game->setHomeTeam($homeTeam);
-		$game->setAwayTeam($awayTeam);
-
-		$playerRepository = new PlayerRepository();
-		$playerRepository->save($player);
-
-		$gameRepository = new GameRepository();
-		$gameRepository->save($game);
-
-		$makeAGuess = new MakeGuessHandler($playerRepository, $gameRepository);
-		$makeAGuess->handle([
-			'username' => 'fmo',
-			'gameId'   => 333,
-			'guess'    => '4-4'
-		]);
-
-		$makeAGuess->handle([
-			'username' => 'fmo',
-			'gameId'   => 323,
-			'guess'    => '4-4'
-		]);
-
-		$this->assertEquals('4-4', $player->getGuess($game)->getGuess());
-	}*/
 }
