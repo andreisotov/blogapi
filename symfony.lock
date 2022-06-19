@@ -110,8 +110,29 @@
     "doctrine/sql-formatter": {
         "version": "1.1.2"
     },
+    "firebase/php-jwt": {
+        "version": "v6.2.0"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.12"
+    },
+    "google/apiclient": {
+        "version": "2.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "49c5d7a66d863d28513979bf0666dc77599100c0"
+        },
+        "files": [
+            "config/packages/google_apiclient.yaml"
+        ]
+    },
+    "google/apiclient-services": {
+        "version": "v0.250.0"
+    },
+    "google/auth": {
+        "version": "v1.21.0"
     },
     "guzzlehttp/guzzle": {
         "version": "7.4.2"
@@ -158,6 +179,12 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.5.0"
+    },
+    "paragonie/random_compat": {
+        "version": "v9.99.100"
+    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },
@@ -172,6 +199,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.6.1"
+    },
+    "phpseclib/phpseclib": {
+        "version": "3.0.14"
     },
     "phpspec/prophecy": {
         "version": "v1.15.0"

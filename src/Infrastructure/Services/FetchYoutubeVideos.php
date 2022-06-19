@@ -2,13 +2,13 @@
 
 namespace BlogAPI\Infrastructure\Services;
 
-use BlogAPI\Infrastructure\Formatters\FormatterInterface;
+use BlogAPI\Infrastructure\ExternalAPI\Youtube\YoutubeVideos;
 use BlogAPI\Infrastructure\Formatters\YoutubeVideoFormatter;
 
 class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 {
 	public function __construct(
-		private ProviderInterface $provider,
+		private YoutubeVideos $provider,
 		private YoutubeVideoFormatter $youtubeVideoFormatter
 	) {
 	}
@@ -21,6 +21,8 @@ class FetchYoutubeVideos implements FetchYoutubeVideosInterface
 	public function fetch(array $input = []): array
 	{
 		$videos = $this->provider->getContent($input);
+
+        dd($videos);
 
 		$videoArray = [];
 

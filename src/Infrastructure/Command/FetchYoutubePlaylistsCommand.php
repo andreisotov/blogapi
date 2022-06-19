@@ -3,12 +3,13 @@
 namespace BlogAPI\Infrastructure\Command;
 
 use BlogAPI\Application\Handler\Category\CreateCategoryHandler;
-use BlogAPI\Infrastructure\Services\FetchYoutubePlaylistsInterface;
+use BlogAPI\Infrastructure\Services\FetchYoutubePlaylistsServiceInterface;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 class FetchYoutubePlaylistsCommand extends Command
 {
@@ -20,27 +21,27 @@ class FetchYoutubePlaylistsCommand extends Command
 	private const MAX_RESULTS = 50;
 
 	public function __construct(
-		private FetchYoutubePlaylistsInterface $fetchYoutubePlaylists,
-		private CreateCategoryHandler $createCategoryHandler
+		private FetchYoutubePlaylistsServiceInterface $fetchYoutubePlaylists,
+		private CreateCategoryHandler $createCategoryHandler,
+		private ContainerBagInterface $params,
 	) {
 		parent::__construct();
 	}
 
 	/**
-	 * @param InputInterface  $input
-	 * @param OutputInterface $output
+	 * @param \Symfony\Component\Console\Input\InputInterface   $input
+	 * @param \Symfony\Component\Console\Output\OutputInterface $output
 	 *
 	 * @return int
+	 * @throws \Psr\Container\ContainerExceptionInterface
+	 * @throws \Psr\Container\NotFoundExceptionInterface
 	 */
 	public function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$playlists = $this->fetchYoutubePlaylists->fetch(
 			[
-				'params' => [
-					'channelId'  => $input->getArgument('channelId'),
-					'part'       => 'snippet,id',
-					'maxResults' => $input->getArgument('maxResults') ?? self::MAX_RESULTS
-				]
+				'channelId' => $this->params->get('google_api.youtube.channel_id'),
+				'maxResults' => $input->getArgument('maxResults') ?? self::MAX_RESULTS
 			]
 		);
 
@@ -65,7 +66,6 @@ class FetchYoutubePlaylistsCommand extends Command
 	{
 		parent::configure();
 
-		$this->addArgument('channelId', InputArgument::REQUIRED);
 		$this->addArgument('maxResults', InputArgument::OPTIONAL);
 	}
 }

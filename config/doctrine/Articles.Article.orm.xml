@@ -25,6 +25,10 @@
             <unique-constraint columns="slug" name="unique_article_slug" />
         </unique-constraints>
 
+        <many-to-many field="categories" inversed-by="articles" target-entity="BlogAPI\Domain\Categories\Category">
+
+        </many-to-many>
+
         <many-to-many field="tags" target-entity="BlogAPI\Domain\Tags\Tag">
             <cascade>
                 <cascade-all/>
@@ -34,21 +38,7 @@
                     <join-column name="article_id" referenced-column-name="id" nullable="false" unique="false" />
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="tag_id" referenced-column-name="id" column-definition="INT" />
-                </inverse-join-columns>
-            </join-table>
-        </many-to-many>
-
-        <many-to-many field="categories" target-entity="BlogAPI\Domain\Categories\Category">
-            <cascade>
-                <cascade-all/>
-            </cascade>
-            <join-table name="article_category">
-                <join-columns>
-                    <join-column name="article_id" referenced-column-name="id" nullable="false" unique="false" />
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="category_id" referenced-column-name="id" column-definition="INT" />
+                    <join-column name="tag_id" referenced-column-name="id" unique="false" column-definition="INT" />
                 </inverse-join-columns>
             </join-table>
         </many-to-many>

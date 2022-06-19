@@ -2,7 +2,7 @@
 
 namespace BlogAPI\Infrastructure\Services;
 
-interface FetchYoutubePlaylistsInterface
+interface FetchYoutubePlaylistsServiceInterface
 {
 	public function fetch(array $input);
 }

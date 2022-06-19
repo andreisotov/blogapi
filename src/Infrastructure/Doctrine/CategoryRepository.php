@@ -9,9 +9,11 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class CategoryRepository extends ServiceEntityRepository implements CategoryRepositoryInterface
 {
-	public function __construct(ManagerRegistry $registry)
+	public function __construct(
+		private ManagerRegistry $managerRegistry
+	)
 	{
-		parent::__construct($registry, Category::class);
+		parent::__construct($managerRegistry, Category::class);
 	}
 
 	/**
@@ -73,7 +75,23 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
 	 */
 	public function save(Category $category): void
 	{
+		$this->managerRegistry->resetManager();
 		$this->_em->persist($category);
 		$this->_em->flush();
 	}
+
+    /**
+     * @param string $youtubeCategoryId
+     *
+     * @return \BlogAPI\Domain\Categories\Category|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getCategoryByYoutubeVideoId(string $youtubeCategoryId): ?Category
+    {
+        $qb = $this->createQueryBuilder("c");
+        $qb->where("c.youtubePlaylistId = :youtube_playlist_id")
+            ->setParameter('youtube_playlist_id', $youtubeCategoryId);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

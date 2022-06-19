@@ -2,15 +2,20 @@
 
 namespace BlogAPI\Application\Handler\Category;
 
+use BlogAPI\Application\Handler\Article\CreateArticleHandler;
 use BlogAPI\Domain\Categories\Category;
 use BlogAPI\Domain\Categories\CategoryRepositoryInterface;
+use BlogAPI\Infrastructure\Formatters\YoutubePlaylistVideoFormatter;
+use BlogAPI\Infrastructure\Formatters\YoutubeVideoFormatter;
 use DateTimeImmutable;
 use RuntimeException;
 
 class CreateCategoryHandler
 {
 	public function __construct(
-		private CategoryRepositoryInterface $categoryRepository
+		private CategoryRepositoryInterface $categoryRepository,
+		private CreateArticleHandler $articleHandler,
+		private YoutubeVideoFormatter $videoFormatter
 	) {
 	}
 
@@ -22,10 +27,6 @@ class CreateCategoryHandler
 	 */
 	public function handle(array $category): void
 	{
-		if ($this->categoryRepository->findOneBy(['youtube_playlist_id' => $category['youtube_playlist_id']])) {
-			throw new RuntimeException('Category already saved');
-		}
-
 		$createdAt = new DateTimeImmutable($category['publish_at']);
 
 		$categoryObj = new Category();
@@ -36,8 +37,20 @@ class CreateCategoryHandler
 		$categoryObj->setActive($category['active']);
 		$categoryObj->setCreatedAt($createdAt);
 
-		$this->categoryRepository->save(
-			$categoryObj
-		);
+        $issetCategory = $this->categoryRepository->getCategoryByYoutubeVideoId($category['youtube_playlist_id']);
+
+        if (is_null($issetCategory)) {
+            $this->categoryRepository->save($categoryObj);
+            $categoryId = $categoryObj->getId();
+        } else {
+            $categoryId = $issetCategory->getId();
+        }
+
+		/** Save articles */
+		if ($category['articles']) {
+			foreach ($category['articles'] as $article) {
+				$this->articleHandler->handle($this->videoFormatter->formatted($article), $categoryId);
+			}
+		}
 	}
 }
