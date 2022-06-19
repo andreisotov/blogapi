@@ -11,12 +11,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
-class FetchYoutubePlaylistsCommand extends Command
+class FetchYoutubeChannelCommand extends Command
 {
 	/**
 	 * @var string
 	 */
-	protected static $defaultName = 'app:fetch-youtube-playlists';
+	protected static $defaultName = 'app:fetch-youtube-channel';
 
 	private const MAX_RESULTS = 50;
 
