@@ -4,13 +4,14 @@ namespace BlogAPI\Infrastructure\Services;
 
 use BlogAPI\Infrastructure\ExternalAPI\Youtube\YoutubePlaylists;
 use BlogAPI\Infrastructure\Formatters\YoutubePlaylistFormatter;
+use BlogAPI\Infrastructure\Services\Interfaces\FetchServiceInterface;
 
-class FetchYoutubePlaylistsService implements FetchYoutubePlaylistsServiceInterface
+class FetchYoutubePlaylistsService implements FetchServiceInterface
 {
 	public function __construct(
 		private YoutubePlaylists $provider,
 		private YoutubePlaylistFormatter $youtubePlaylistFormatter,
-		private FetchYoutubePlaylistVideos $playlistVideos
+		private FetchYoutubePlaylistVideosService $playlistVideos
 	) {
 	}
 

@@ -5,7 +5,7 @@ namespace BlogAPI\Infrastructure\ExternalAPI\Youtube;
 use BlogAPI\Infrastructure\Services\Interfaces\ProviderInterface;
 use Exception;
 
-class YoutubePlaylistItems implements ProviderInterface
+class YoutubeVideo implements ProviderInterface
 {
 	use YoutubeApiClient;
 
@@ -17,17 +17,16 @@ class YoutubePlaylistItems implements ProviderInterface
 	 */
 	public function getContent(array $criteria): float|object|int|bool|array|string|null
 	{
-		if ( ! $criteria['playlistId']) {
+		if ( ! $criteria['id']) {
 			throw new Exception('playlistId doesn`t exists.');
 		}
 
 		$params = [
-			'playlistId' => $criteria['playlistId'],
-			'maxResults' => 50 ?? $criteria['maxResults'],
+			'id' => $criteria['id'],
 		];
 
 		try {
-			return $this->youtubeClient()->playlistItems->listPlaylistItems('id,contentDetails,snippet,status', $params);
+			return $this->youtubeClient()->videos->listVideos('id,contentDetails,snippet,status', $params)[0];
 		} catch (Exception $exception) {
 			return $exception->getMessage();
 		}

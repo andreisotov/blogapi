@@ -6,7 +6,7 @@
 parameters:
     google_api.key: '%env(GOOGLE_API_KEY)%'
     google_api.youtube.channel_id: '%env(GOOGLE_API_YOUTUBE_CHANNEL_ID)%'
-    container.autowiring.strict_mode: true
+    container.autowiring.strict_mode: false
 
 services:
     # default configuration for services in *this* file

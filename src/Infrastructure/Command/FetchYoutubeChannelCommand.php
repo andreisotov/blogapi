@@ -3,9 +3,10 @@
 namespace BlogAPI\Infrastructure\Command;
 
 use BlogAPI\Application\Handler\Category\CreateCategoryHandler;
-use BlogAPI\Infrastructure\Services\FetchYoutubePlaylistsServiceInterface;
+use BlogAPI\Infrastructure\Services\FetchYoutubePlaylistsService;
 use Exception;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,7 +22,7 @@ class FetchYoutubeChannelCommand extends Command
 	private const MAX_RESULTS = 50;
 
 	public function __construct(
-		private FetchYoutubePlaylistsServiceInterface $fetchYoutubePlaylists,
+		private FetchYoutubePlaylistsService $fetchYoutubePlaylists,
 		private CreateCategoryHandler $createCategoryHandler,
 		private ContainerBagInterface $params,
 	) {
@@ -45,16 +46,28 @@ class FetchYoutubeChannelCommand extends Command
 			]
 		);
 
+        $progressBar = new ProgressBar($output);
+        $progressBar->setBarCharacter('<fg=green>•</>');
+        $progressBar->setEmptyBarCharacter('<fg=green>⚬</>');
+        $progressBar->setProgressCharacter('<fg=green>➤</>');
+        $progressBar->setFormat('verbose');
+        $progressBar->start(count($playlists));
+
+        $success = $errors = 0;
+
 		foreach ($playlists as $playlist) {
 			try {
 				$this->createCategoryHandler->handle($playlist);
-				$output->writeln($playlist['title'] . " playlist are saved.");
+                $success++;
 			} catch (Exception $e) {
-				$output->writeln($e->getMessage());
+                $errors++;
 			}
+            $progressBar->advance();
 		}
 
-		$output->writeln('Playlists are created');
+		$output->writeln(PHP_EOL . 'Youtube channel data obtained');
+		$output->writeln( 'Success: ' . $success . ' items.');
+		$output->writeln('Errors (can be doubles): ' . $errors . ' items.');
 
 		return Command::SUCCESS;
 	}

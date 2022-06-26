@@ -5,17 +5,17 @@ namespace BlogAPI\Application\Handler\Category;
 use BlogAPI\Application\Handler\Article\CreateArticleHandler;
 use BlogAPI\Domain\Categories\Category;
 use BlogAPI\Domain\Categories\CategoryRepositoryInterface;
-use BlogAPI\Infrastructure\Formatters\YoutubePlaylistVideoFormatter;
 use BlogAPI\Infrastructure\Formatters\YoutubeVideoFormatter;
+use BlogAPI\Infrastructure\Services\FetchYoutubeVideoService;
 use DateTimeImmutable;
-use RuntimeException;
 
 class CreateCategoryHandler
 {
 	public function __construct(
 		private CategoryRepositoryInterface $categoryRepository,
 		private CreateArticleHandler $articleHandler,
-		private YoutubeVideoFormatter $videoFormatter
+		private YoutubeVideoFormatter $videoFormatter,
+        private FetchYoutubeVideoService $fetchYoutubeVideoService
 	) {
 	}
 
@@ -49,7 +49,8 @@ class CreateCategoryHandler
 		/** Save articles */
 		if ($category['articles']) {
 			foreach ($category['articles'] as $article) {
-				$this->articleHandler->handle($this->videoFormatter->formatted($article), $categoryId);
+                $articleItem = $this->fetchYoutubeVideoService->fetch(['id' => $article->getYoutubeVideoId()]);
+				$this->articleHandler->handle($this->videoFormatter->formatted($articleItem), $categoryId);
 			}
 		}
 	}

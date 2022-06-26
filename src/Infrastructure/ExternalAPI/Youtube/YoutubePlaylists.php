@@ -2,7 +2,7 @@
 
 namespace BlogAPI\Infrastructure\ExternalAPI\Youtube;
 
-use BlogAPI\Infrastructure\Services\ProviderInterface;
+use BlogAPI\Infrastructure\Services\Interfaces\ProviderInterface;
 use Exception;
 
 class YoutubePlaylists implements ProviderInterface

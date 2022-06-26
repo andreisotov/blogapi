@@ -1,5 +1,5 @@
 <?php
-namespace BlogAPI\Infrastructure\Services;
+namespace BlogAPI\Infrastructure\Services\Interfaces;
 
 interface ProviderInterface
 {
