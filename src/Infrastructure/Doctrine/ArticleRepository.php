@@ -146,14 +146,40 @@ class ArticleRepository extends ServiceEntityRepository implements ArticleReposi
             "categoryId" => $categoryId,
         ];
 
+        if ($this->getArticleCategoryDoubles($articleId, $categoryId) === false) {
+            // execure query and get result
+            $this->registry->getConnection()
+                ->executeQuery(
+                    $query,
+                    $queryParams
+                );
+        }
+
+        // clear manager entities
+        $this->registry->resetManager();
+    }
+
+    /**
+     * @param int $tagId
+     * @param int $articleId
+     *
+     * @return bool
+     */
+    public function getArticleCategoryDoubles(int $articleId, int $categoryId): bool
+    {
+        $query       = "SELECT * FROM `article_category` WHERE `article_id` = :articleId AND `category_id` = :categoryId";
+        $queryParams = [
+            "articleId"  => $articleId,
+            "categoryId" => $categoryId,
+        ];
+
         // execure query and get result
-        $this->registry->getConnection()
+        $statement = $this->registry->getConnection()
             ->executeQuery(
                 $query,
                 $queryParams
             );
 
-        // clear manager entities
-        $this->registry->resetManager();
+        return (bool)$statement->fetchAll();
     }
 }

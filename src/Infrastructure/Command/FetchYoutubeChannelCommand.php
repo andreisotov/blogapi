@@ -56,12 +56,8 @@ class FetchYoutubeChannelCommand extends Command
         $success = $errors = 0;
 
 		foreach ($playlists as $playlist) {
-			try {
-				$this->createCategoryHandler->handle($playlist);
-                $success++;
-			} catch (Exception $e) {
-                $errors++;
-			}
+            $this->createCategoryHandler->handle($playlist);
+            $success++;
             $progressBar->advance();
 		}
 
