@@ -33,7 +33,7 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
 			$categories[$key]['title']        = $categoryItem->getTitle();
 			$categories[$key]['slug']         = $categoryItem->getSlug();
 			$categories[$key]['description']  = $categoryItem->getDescription() ?? '';
-			$categories[$key]['youtube_code'] = $categoryItem->getYoutubeCode() ?? '';
+			$categories[$key]['youtube_code'] = $categoryItem->getYoutubeVideoId() ?? '';
 			$categories[$key]['image']        = $categoryItem->getImage() ?? '';
 			$categories[$key]['created_at']   = $categoryItem->getCreatedAt() ?? '';
 			$categories[$key]['updated_at']   = $categoryItem->getUpdatedAt() ?? '';

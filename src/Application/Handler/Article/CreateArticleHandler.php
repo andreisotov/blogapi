@@ -27,6 +27,8 @@ class CreateArticleHandler
      */
     public function handle(array $article, int $categoryId = null): void
     {
+        $publishAt = new DateTimeImmutable($article['publish_at']);
+
         $articleObj = new Article();
         $articleObj->setTitle($article['title']);
         $articleObj->setSlug($article['slug']);
@@ -34,7 +36,8 @@ class CreateArticleHandler
         $articleObj->setYoutubeVideoId($article['youtube_video_id']);
         $articleObj->setImage($article['image']);
         $articleObj->setActive($article['active']);
-        $articleObj->setPublishAt(new DateTimeImmutable($article['publish_at']));
+        $articleObj->setPublishAt($publishAt);
+        $articleObj->setCreatedAt(new DateTimeImmutable(date('Y-m-d H:i:s')));
 
         $issetArticle = $this->articleRepository->getArticleByYoutubeVideoId($article['youtube_video_id']);
 

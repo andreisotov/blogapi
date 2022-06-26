@@ -5,6 +5,7 @@ namespace BlogAPI\Controller;
 use BlogAPI\Application\Handler\Category\ItemCategoryHandler;
 use BlogAPI\Application\Handler\Category\ListCategoryHandler;
 use BlogAPI\Domain\Articles\Article;
+use BlogAPI\Infrastructure\Doctrine\ArticleRepository;
 use BlogAPI\Infrastructure\Doctrine\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +17,8 @@ class CategoryController extends AbstractController
 	public function __construct(
 		private ListCategoryHandler $listCategoryHandler,
 		private ItemCategoryHandler $itemCategoryHandler,
-		private CategoryRepository $categoryRepository
+		private CategoryRepository $categoryRepository,
+        private ArticleRepository $articleRepository
 	) {
 
 	}
@@ -58,7 +60,7 @@ class CategoryController extends AbstractController
 			'id'          => $article->getId(),
 			'title'       => $article->getTitle(),
 			'description' => $article->getDescription() ?? '',
-			'youtubeCode' => $article->getYoutubeCode() ?? '',
+			'youtubeCode' => $article->getYoutubeVideoId() ?? '',
 			'image'       => $article->getImage() ?? '',
 			'categories'  => $this->articleRepository->getCategories($article),
 			'tags'        => $this->articleRepository->getTags($article),
