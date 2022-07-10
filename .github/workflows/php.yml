@@ -16,7 +16,7 @@ jobs:
 
       - uses: actions/checkout@main
       - name: copy file
-        uses: canastro/copy-file-action@master
+        uses: canastro/copy-file-action@main
         with:
           source: ".env.github"
           target: ".env"
