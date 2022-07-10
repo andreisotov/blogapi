@@ -2,19 +2,23 @@
 
 namespace BlogAPI\Application\Handler\Article;
 
+use BlogAPI\Application\Services\FileUploaderInterface;
 use BlogAPI\Domain\Articles\Article;
 use BlogAPI\Infrastructure\Doctrine\ArticleRepository;
 use BlogAPI\Infrastructure\Doctrine\TagRepository;
 use BlogAPI\Infrastructure\Formatters\YoutubeVideoTagFormatter;
 use DateTimeImmutable;
-use Symfony\Component\String\Slugger\AsciiSlugger;
+use Exception;
 
 class CreateArticleHandler
 {
+    private const BUCKET_NAME = 'ansotov-api-articles';
+
     public function __construct(
         private ArticleRepository $articleRepository,
         private TagRepository $tagRepository,
-        private YoutubeVideoTagFormatter $tagFormatter
+        private YoutubeVideoTagFormatter $tagFormatter,
+        private FileUploaderInterface $fileUploader
     ) {
     }
 
@@ -29,12 +33,18 @@ class CreateArticleHandler
     {
         $publishAt = new DateTimeImmutable($article['publish_at']);
 
+        try {
+            $this->fileUploader->upload(self::BUCKET_NAME, $article['title'], $article['image']);
+        } catch (Exception $exception) {
+            throw new Exception('Can`t upload the logo: ' . $exception->getMessage());
+        }
+
         $articleObj = new Article();
         $articleObj->setTitle($article['title']);
         $articleObj->setSlug($article['slug']);
         $articleObj->setDescription($article['description']);
         $articleObj->setYoutubeVideoId($article['youtube_video_id']);
-        $articleObj->setImage($article['image']);
+        $articleObj->setImage($this->fileUploader->getImageUrl());
         $articleObj->setActive($article['active']);
         $articleObj->setPublishAt($publishAt);
         $articleObj->setCreatedAt(new DateTimeImmutable(date('Y-m-d H:i:s')));

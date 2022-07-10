@@ -19,6 +19,11 @@ class FetchYoutubeChannelCommand extends Command
 	 */
 	protected static $defaultName = 'app:fetch-youtube-channel';
 
+    /**
+     * @var string
+     */
+    protected static $defaultDescription = 'Obtain data from youtube channel based on channel ID';
+
 	private const MAX_RESULTS = 50;
 
 	public function __construct(
