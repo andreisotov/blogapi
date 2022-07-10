@@ -17,32 +17,32 @@ class CreateArticleHandlerTest extends TestCase
 
 	public function testHandle()
 	{
-		/*$id = 1;
+        $id = 1;
 
-		$article = new Article();
-		$article->setId($id);
-		$article->setTitle('Article');
-		$article->setSlug('article');
-		$article->setDescription('Article description');
-		$article->setYoutubeVideoId('asdjkhsdkjhsad');
-		$article->setImage('/articles/article.png');
+        $article = new Article();
+        $article->setId($id);
+        $article->setTitle('Article');
+        $article->setSlug('article');
+        $article->setDescription('Article description');
+        $article->setYoutubeVideoId('asdjkhsdkjhsad');
+        $article->setImage('/articles/article.png');
 
-		$articleRepository = $this->getMockBuilder(ArticleRepository::class)
-			->setMethods(['save', 'articles'])
-			->getMock();
+        $articleRepository = $this->getMockBuilder(ArticleRepository::class)
+            ->setMethods(['save', 'articles'])
+            ->getMock();
 
-		$articleRepository->expects($this->once())
-			->method('save')
-			->with($article);
+        $articleRepository->expects($this->once())
+            ->method('save')
+            ->with($article);
 
 
-		dd($articleRepository->articles());
+        dd($articleRepository->articles());
 
-		$articleRepository = $this->createMock(CreateArticleHandler::class);
+        $articleRepository = $this->createMock(CreateArticleHandler::class);
 
-		$articleRepository->expects($this->any())
-			->method('handle')
-			->with($article);*/
+        $articleRepository->expects($this->any())
+            ->method('handle')
+            ->with($article);
 
 		$this->assertTrue(true);
 	}
