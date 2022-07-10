@@ -14,9 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/checkout@main
+      - uses: actions/checkout@master
       - name: copy file
-        uses: canastro/copy-file-action@main
+        uses: canastro/copy-file-action@master
         with:
           source: ".env.github"
           target: ".env"
