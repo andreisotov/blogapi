@@ -17,8 +17,7 @@ class CategoryController extends AbstractController
 	public function __construct(
 		private ListCategoryHandler $listCategoryHandler,
 		private ItemCategoryHandler $itemCategoryHandler,
-		private CategoryRepository $categoryRepository,
-        private ArticleRepository $articleRepository
+		private CategoryRepository $categoryRepository
 	) {
 
 	}
@@ -46,27 +45,25 @@ class CategoryController extends AbstractController
 		return new JsonResponse($allCategories);
 	}
 
-	#[Route('/api/category/{id}', methods: ['GET'])]
-	public function article(int $id): JsonResponse
+	#[Route('/api/category/{slug}', methods: ['GET'])]
+	public function category(string $slug): JsonResponse
 	{
-		/** @var Article $article */
-		$article = $this->itemCategoryHandler->handle($id);
+		/** @var Category $category */
+		$category = $this->itemCategoryHandler->handle($slug);
 
-		if (is_null($article)) {
+		if (is_null($category)) {
 			return new JsonResponse(null, 404);
 		}
 
-		$articleItem = [
-			'id'          => $article->getId(),
-			'title'       => $article->getTitle(),
-			'description' => $article->getDescription() ?? '',
-			'youtubeCode' => $article->getYoutubeVideoId() ?? '',
-			'image'       => $article->getImage() ?? '',
-			'categories'  => $this->articleRepository->getCategories($article),
-			'tags'        => $this->articleRepository->getTags($article),
-			'created_at'  => $article->getCreatedAt(),
+		$categoryItem = [
+			'id'          => $category->getId(),
+			'title'       => $category->getTitle(),
+			'description' => $category->getDescription() ?? '',
+			'youtubeCode' => $category->getYoutubePlaylistId() ?? '',
+			'articles'  => $this->categoryRepository->getArticles($category),
+			'created_at'  => $category->getCreatedAt(),
 		];
 
-		return new JsonResponse($articleItem);
+		return new JsonResponse($categoryItem);
 	}
 }

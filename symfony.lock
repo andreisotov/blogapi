@@ -164,6 +164,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "liip/functional-test-bundle": {
+        "version": "4.5.1"
+    },
     "monolog/monolog": {
         "version": "2.6.0"
     },

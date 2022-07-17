@@ -12,7 +12,6 @@ class ListArticleHandler
 	public function __construct(
 		private ArticleRepositoryInterface $articleRepository
 	) {
-
 	}
 
 	public function handle(): array

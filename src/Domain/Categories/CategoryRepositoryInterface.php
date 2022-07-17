@@ -4,7 +4,7 @@ namespace BlogAPI\Domain\Categories;
 
 interface CategoryRepositoryInterface
 {
-	public function category(int $id): ?Category;
+	public function category(string $slug): ?Category;
 
 	public function categories(): array;
 }

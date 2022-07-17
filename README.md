@@ -8,3 +8,6 @@ You can get articles, categories, tags and pivot data (many to many) of these da
 # Commands
 Fetch youtube channel data:
 **php bin/console app:fetch-youtube-channel**
+
+# API gates
+You can import file **api.ansotov.postman_collection.json** to Postman

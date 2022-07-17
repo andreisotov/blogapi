@@ -42,17 +42,17 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
 		return $categories;
 	}
 
-	/**
-	 * @param int $id
-	 *
-	 * @return \BlogAPI\Domain\Categories\Category|null
-	 * @throws \Doctrine\ORM\NonUniqueResultException
-	 */
-	public function category(int $id): ?Category
+    /**
+     * @param string $slug
+     *
+     * @return \BlogAPI\Domain\Categories\Category|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+	public function category(string $slug): ?Category
 	{
 		$qb = $this->createQueryBuilder("c");
-		$qb->where("c.id = :id and c.active = 1")
-			->setParameter('id', $id);
+		$qb->where("c.slug = :slug and c.active = 1")
+			->setParameter('slug', $slug);
 
 		return $qb->getQuery()->getOneOrNullResult();
 	}

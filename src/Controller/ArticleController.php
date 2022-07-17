@@ -46,11 +46,11 @@ class ArticleController extends AbstractController
         return new JsonResponse($allArticles);
     }
 
-    #[Route('/api/article/{id}', methods: ['GET'])]
-    public function article(int $id): JsonResponse
+    #[Route('/api/article/{slug}', methods: ['GET'])]
+    public function article(string $slug): JsonResponse
     {
         /** @var Article $article */
-        $article = $this->itemArticleHandler->handle($id);
+        $article = $this->itemArticleHandler->handle($slug);
 
         if (is_null($article)) {
             return new JsonResponse(null, 404);

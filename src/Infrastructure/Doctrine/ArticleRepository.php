@@ -23,16 +23,16 @@ class ArticleRepository extends ServiceEntityRepository implements ArticleReposi
     }
 
     /**
-     * @param int $id
+     * @param string $slug
      *
      * @return \BlogAPI\Domain\Articles\Article|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function article(int $id): ?Article
+    public function article(string $slug): ?Article
     {
         $qb = $this->createQueryBuilder("a");
-        $qb->where("a.id = :id and a.active = 1")
-            ->setParameter('id', $id);
+        $qb->where("a.slug = :slug and a.active = 1")
+            ->setParameter('slug', $slug);
 
         return $qb->getQuery()->getOneOrNullResult();
     }

@@ -4,7 +4,7 @@ namespace BlogAPI\Domain\Articles;
 
 interface ArticleRepositoryInterface
 {
-	public function article(int $id): ?Article;
+	public function article(string $slug): ?Article;
 
 	public function articles(): array;
 }

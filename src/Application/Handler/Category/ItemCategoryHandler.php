@@ -15,11 +15,10 @@ class ItemCategoryHandler
 	public function __construct(
 		private CategoryRepositoryInterface $categoryRepository
 	) {
-
 	}
 
-	public function handle(int $id): ?Category
+	public function handle(string $slug): ?Category
 	{
-		return $this->categoryRepository->category($id);
+		return $this->categoryRepository->category($slug);
 	}
 }
