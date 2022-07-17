@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CategoriesTest extends WebTestCase
 {
+    private const URL = 'http://127.0.0.1:8080';
+
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
@@ -14,7 +16,7 @@ class CategoriesTest extends WebTestCase
     {
         $client = new Client(
             [
-                'base_uri' => 'http://127.0.0.1:8080',
+                'base_uri' => self::URL,
             ]
         );
 
@@ -30,7 +32,7 @@ class CategoriesTest extends WebTestCase
     {
         $client = new Client(
             [
-                'base_uri' => 'http://127.0.0.1:8080',
+                'base_uri' => self::URL,
             ]
         );
 
