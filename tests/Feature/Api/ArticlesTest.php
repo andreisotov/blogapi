@@ -1,14 +1,12 @@
 <?php
 
-namespace Functional\Api;
+namespace Feature\Api;
 
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ArticlesTest extends WebTestCase
 {
-    private const URL = 'http://127.0.0.1:8080';
-
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
@@ -16,7 +14,7 @@ class ArticlesTest extends WebTestCase
     {
         $client = new Client(
             [
-                'base_uri' => self::URL,
+                'base_uri' => APP_INNER_URL,
             ]
         );
 
@@ -32,7 +30,7 @@ class ArticlesTest extends WebTestCase
     {
         $client = new Client(
             [
-                'base_uri' => self::URL,
+                'base_uri' => APP_INNER_URL,
             ]
         );
 

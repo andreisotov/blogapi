@@ -1,6 +1,6 @@
 <?php
 
-namespace Functional\Api;
+namespace Feature\Api;
 
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

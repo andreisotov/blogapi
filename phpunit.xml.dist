@@ -16,6 +16,7 @@
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
         <server name="KERNEL_CLASS" value="BlogAPI\Kernel" />
+        <const name="APP_INNER_URL" value="http://127.0.0.1:8080" />
     </php>
 
     <testsuites>

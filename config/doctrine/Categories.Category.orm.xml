@@ -22,7 +22,7 @@
             <unique-constraint columns="slug" name="unique_article_slug" />
         </unique-constraints>
 
-        <many-to-many field="articles" inversed-by="articles" target-entity="BlogAPI\Domain\Articles\Article">
+        <many-to-many field="articles" target-entity="BlogAPI\Domain\Articles\Article" mapped-by="categories">
             <cascade>
                 <cascade-all/>
             </cascade>

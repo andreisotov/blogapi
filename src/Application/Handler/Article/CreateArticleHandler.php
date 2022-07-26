@@ -12,7 +12,7 @@ use Exception;
 
 class CreateArticleHandler
 {
-    private const BUCKET_NAME = 'ansotov-api-articles';
+    private const BUCKET_NAME = 'ansotov';
 
     public function __construct(
         private ArticleRepository $articleRepository,

@@ -35,6 +35,6 @@ class UploadFile implements FileUploaderInterface
 
     public function getImageUrl(): string
     {
-        return "https://" . $this->bucketName . ".s3.eu-central-1.amazonaws.com/" . $this->s3Object;
+        return "https://" . $this->bucketName . ".s3.us-east-2.amazonaws.com/" . $this->s3Object;
     }
 }

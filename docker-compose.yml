@@ -1,0 +1,29 @@
+version: "3"
+services:
+  app:
+    build: .
+    container_name: ansotov-api
+    volumes:
+      - ./:/home/ansotov-api
+    ports:
+      - "8033:8080"
+    depends_on:
+      - mysql-ansotov-api
+  mysql-ansotov-api:
+    image: mysql:8.0
+    container_name: mysql-ansotov-api
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    ports:
+      - "3311:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: ansotov
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 12345
+    command:
+      --sql-mode=""
+
+volumes:
+  db_data: {}
