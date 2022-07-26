@@ -68,7 +68,7 @@
             "@auto-scripts"
         ],
         "test": [
-            "./vendor/bin/phpunit tests/"
+            "./vendor/bin/phpunit tests/Unit"
         ]
     },
     "conflict": {
